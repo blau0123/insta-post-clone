@@ -1,6 +1,8 @@
 import React from 'react';
 import os_banner from '../os_banner.jpg';
 import person_icon from '../person-icon.png';
+import heart_icon from '../heart.png';
+import red_heart_icon from '../red-heart.png';
 import {connect} from 'react-redux';
 import {addComment, getAllComments, replyToComment, likeComment, likeReply} from '../redux/actions/commentActions';
 
@@ -8,6 +10,13 @@ const buttonStyle = {
     background: 'none',
     border: 'none',
     padding: 0,
+    cursor: 'pointer',
+    fontSize: '12px',
+}
+
+const heartStyles = {
+    float: 'right',
+    marginRight: '15px',
     cursor: 'pointer',
 }
 
@@ -185,8 +194,9 @@ class PostHorizontal extends React.Component{
                                 {
                                     // if already liked, can't like again
                                     comment.liked ? 
-                                        <button id={comment.id} style={{backgroundColor:'red'}}>Like</button> :
-                                        <button id={comment.id} onClick={this.onLikeClick} style={buttonStyle}>Like</button>
+                                        <img src={red_heart_icon} height='10px' width='10px' style={heartStyles}/> :
+                                        <img src={heart_icon} height='10px' width='10px'style={heartStyles}
+                                            id={comment.id} onClick={this.onLikeClick}/>
 
                                 }
                             </div>
@@ -196,7 +206,7 @@ class PostHorizontal extends React.Component{
                             comment.replies.length > 0 ? 
                                 comment.replies.map(reply => 
                                     <div className='reply-content' style={{marginLeft:'20px', display:'flex'}}>
-                                        <div className='content'>
+                                        <div className='content' style={{display:'flex', flex:'0 80%'}}>
                                             <img src={person_icon} height='40px' width='40px' style={{flex:'0 0 10%'}}/>
                                             <div className='content' style={{flex:'1'}}>
                                                 <div className='username-content' style={{display:'flex'}}>
@@ -222,12 +232,15 @@ class PostHorizontal extends React.Component{
                                                 </div>
                                             </div>
                                         </div>
+                                        <div style={{flex:'1'}}>
                                             {
                                                 // show likes button
                                                 reply.liked ? 
-                                                    <button id={reply.id} style={{backgroundColor:'red'}}>Like</button> :
-                                                    <button id={reply.id} style={buttonStyle} onClick={() => this.onReplyLikeClick(comment.id, reply.id)}>Like</button> 
+                                                    <img src={red_heart_icon} height='10px' width='10px' style={heartStyles}/> :
+                                                    <img src={heart_icon} height='10px' width='10px'style={heartStyles}
+                                                        id={reply.id} onClick={() => this.onReplyLikeClick(comment.id, reply.id)}/>
                                             }
+                                        </div>
                                     </div>       
                                 ) : null
                         }
@@ -248,14 +261,23 @@ class PostHorizontal extends React.Component{
                             <p style={{flex:'1'}}>os_ucsd</p>
                         </div>
                         <hr />
-                        <div className='comments-section' style={{height:'70vh', overflow:'auto'}}>
+                        <div className='comments-section' style={{height:'75%', overflow:'auto'}}>
                             <div className='comments-list' style={{fontSize:'12px'}}>
+                                <div className='post-descr' style={{display:'flex'}}>
+                                    <img src={person_icon} height='40px' width='40px' style={{flex:'0 10%'}}/>
+                                    <div className='poster-content' style={{flex:'1'}}>
+                                        <p style={{fontWeight:'bold', flex:'0 20%'}}>os-ucsd</p>
+                                        <p style={{flex:'1'}}>First Open Source @ UCSD GBM is today!</p>
+                                    </div>
+                                </div>
                                 {recentComments}
                             </div>
                         </div>
-                        <form onSubmit={this.onAddComment}>
-                            <input id='comment' type='text' value={this.state.comment} onChange={this.onChange} />
-                            <input type='submit' value='Post' />
+                        <hr />
+                        <form onSubmit={this.onAddComment} style={{display:'flex'}}>
+                            <input id='comment' type='text' value={this.state.comment} onChange={this.onChange} 
+                                style={{flex:'0 90%', height:'50px', borderStyle:'none'}}/>
+                            <input type='submit' value='Post' style={buttonStyle}/>
                         </form>
                     </div>
                 </div>
