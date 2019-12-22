@@ -4,21 +4,7 @@ import person_icon from '../person-icon.png';
 import {connect} from 'react-redux';
 import {addComment, getAllComments} from '../redux/actions/commentActions';
 import {Link} from 'react-router-dom';
-
-const buttonStyle = {
-    background: 'none',
-    border: 'none',
-    padding: 0,
-    cursor: 'pointer',
-    marginLeft: '10px',
-    flex: '1',
-    fontSize: '14px',
-    color: '#50c1f5',
-}
-
-const descrStyles = {
-    marginLeft: '20px',
-}
+import './Post.css';
 
 class Post extends React.Component{
     constructor(){
@@ -73,34 +59,33 @@ class Post extends React.Component{
 
         // creating component of recent comments to only show 2 most recent
         const recentComments = commentsList ? commentsList.slice(0, 2).map(comment => 
-            <div className='comment' style={{display:'flex'}}>
-                <div className='user-comment' style={{display:'flex'}}>
-                    <p style={{flex:'0 10%', fontWeight:'bold'}}>username</p>
-                    <p style={{flex:'1', marginLeft:'10px'}}>{comment.content}</p>
+            <div className='comment horiz-flex-container'>
+                <div className='user-comment horiz-flex-container'>
+                    <p className="username">username</p>
+                    <p className="recent-comment">{comment.content}</p>
                 </div>
             </div>
         ) : null;
 
         return(
-            <div className='post-container' style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                <div className='post-content' style={{width:'50vw', borderStyle:'solid', margin:'20px'}}>
-                    <div className='poster-user' style={{display:'flex'}}>
+            <div className='post-container'>
+                <div className='post-content'>
+                    <div className='poster-user horiz-flex-container'>
                         <img src={person_icon} height='40px' width='40px' style={{flex:'0 0 1%'}}/>
                         <p style={{flex:'1'}}>os_ucsd</p>
                     </div>
                     <img src={os_banner} alt='open source' style={{width:'50vw'}}></img>
-                    <p style={descrStyles}>First Open Source @ UCSD GBM is today!</p>
-                    <div className='comments-section' style={descrStyles}>
+                    <p className='descr'>First Open Source @ UCSD GBM is today!</p>
+                    <div className='comments-section descr'>
                         <Link to='/allcomments'>View all {commentsList.length} comments</Link>
                         <ul className='recent-comments-list'>
                             {recentComments}
                         </ul>
                     </div>
                     <hr />
-                    <form onSubmit={this.onAddComment} style={{width:'100%', display:'flex'}}>
-                        <input id='comment' type='text' value={this.state.comment} onChange={this.onChange} 
-                            style={{flex:'0 90%', height:'50px', borderStyle:'none'}}/>
-                        <input type='submit' value='Post' style={buttonStyle}/>
+                    <form className="submit-comment" onSubmit={this.onAddComment}>
+                        <input id='comment' type='text' value={this.state.comment} onChange={this.onChange}/>
+                        <input className='button' type='submit' value='Post'/>
                     </form>
                 </div>
             </div>
