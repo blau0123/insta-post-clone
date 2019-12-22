@@ -29,6 +29,10 @@
     display: flex;
 }
 
+.horiz-flex-fill{
+    flex: 1;
+}
+
 .submit-comment{
     width: 100%;
     display: flex;

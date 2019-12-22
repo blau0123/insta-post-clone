@@ -72,7 +72,7 @@ class Post extends React.Component{
                 <div className='post-content'>
                     <div className='poster-user horiz-flex-container'>
                         <img src={person_icon} height='40px' width='40px' style={{flex:'0 0 1%'}}/>
-                        <p style={{flex:'1'}}>os_ucsd</p>
+                        <p className="horiz-flex-fill">os_ucsd</p>
                     </div>
                     <img src={os_banner} alt='open source' style={{width:'50vw'}}></img>
                     <p className='descr'>First Open Source @ UCSD GBM is today!</p>

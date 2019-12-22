@@ -6,19 +6,7 @@ import red_heart_icon from '../red-heart.png';
 import {connect} from 'react-redux';
 import {addComment, getAllComments, replyToComment, likeComment, likeReply} from '../redux/actions/commentActions';
 
-const buttonStyle = {
-    background: 'none',
-    border: 'none',
-    padding: 0,
-    cursor: 'pointer',
-    fontSize: '12px',
-}
-
-const heartStyles = {
-    float: 'right',
-    marginRight: '15px',
-    cursor: 'pointer',
-}
+import './PostHorizontal.css';
 
 class PostHorizontal extends React.Component{
     constructor(){
@@ -159,18 +147,18 @@ class PostHorizontal extends React.Component{
         // creating component of all comments
         const recentComments = sortedComments ? sortedComments.map(comment => 
             <div className='comment'>
-                <div className='title-content' style={{display:'flex'}}>
+                <div className='title-content horiz-flex-container'>
                     <img src={person_icon} height='40px' width='40px' style={{flex:'0 0 10%'}}/>
-                    <div className='comment-content' style={{flex:'1'}}>
-                        <div style={{display:'flex'}}>
+                    <div className='comment-content horiz-flex-fill'>
+                        <div className="horiz-flex-container">
                             <div className='comment' style={{flex:'0 0 80%'}}>
-                                <div className='username-content' style={{display:'flex'}}>
-                                    <p style={{fontWeight:'bold', flex:'0 0 20%'}}>username</p>
-                                    <p style={{flex:'1', marginLeft:'7px'}}>{comment.content}</p>
+                                <div className='username-content horiz-flex-container'>
+                                    <p className="username">username</p>
+                                    <p className="comment">{comment.content}</p>
                                 </div>
-                                <div className='comment-stats' style={{display:'flex'}}>
-                                    <p style={{flex:'0 30%'}}>{this.getTimeFromNow(comment.posted)}</p>
-                                    <div className='comment-likes' style={{flex:'0 30%'}}>
+                                <div className='comment-stats horiz-flex-container'>
+                                    <p className="reply-comment-stats">{this.getTimeFromNow(comment.posted)}</p>
+                                    <div className='comment-likes reply-comment-stats'>
                                         {
                                             // show number of likes if there are any likes
                                             comment.likes > 0 ? 
@@ -184,18 +172,18 @@ class PostHorizontal extends React.Component{
                                                 : null
                                         }
                                     </div>
-                                    <div style={{flex:'0 30%'}}>
-                                        <button id={comment.id} onClick={this.onReplyClick} style={buttonStyle}>Reply</button>
+                                    <div className="reply-comment-stats">
+                                        <button className="button" id={comment.id} onClick={this.onReplyClick}>Reply</button>
                                     </div>
                                 </div>
                 
                             </div>
-                            <div className='like-button' style={{flex:'1'}}>
+                            <div className='like-button horiz-flex-fill'>
                                 {
                                     // if already liked, can't like again
                                     comment.liked ? 
-                                        <img src={red_heart_icon} height='10px' width='10px' style={heartStyles}/> :
-                                        <img src={heart_icon} height='10px' width='10px'style={heartStyles}
+                                        <img className="heart" src={red_heart_icon} height='10px' width='10px'/> :
+                                        <img className="heart" src={heart_icon} height='10px' width='10px'
                                             id={comment.id} onClick={this.onLikeClick}/>
 
                                 }
@@ -205,17 +193,17 @@ class PostHorizontal extends React.Component{
                             // replies to this comment
                             comment.replies.length > 0 ? 
                                 comment.replies.map(reply => 
-                                    <div className='reply-content' style={{marginLeft:'20px', display:'flex'}}>
-                                        <div className='content' style={{display:'flex', flex:'0 80%'}}>
+                                    <div className='reply-content horiz-flex-container'>
+                                        <div className='full-content horiz-flex-container'>
                                             <img src={person_icon} height='40px' width='40px' style={{flex:'0 0 10%'}}/>
-                                            <div className='content' style={{flex:'1'}}>
-                                                <div className='username-content' style={{display:'flex'}}>
-                                                    <p style={{fontWeight:'bold', flex:'0 0 20%'}}>username</p>
-                                                    <p style={{flex:'1', marginLeft:'7px'}}>{reply.content}</p>
+                                            <div className='content horiz-flex-fill'>
+                                                <div className='username-content horiz-flex-container'>
+                                                    <p className="username">username</p>
+                                                    <p className="comment">{reply.content}</p>
                                                 </div>
-                                                <div className='reply-stats' style={{display:'flex'}}>
-                                                    <p style={{flex:'0 30%'}}>{this.getTimeFromNow(reply.posted)}</p>
-                                                    <div style={{flex:'0 30%'}}>
+                                                <div className='horiz-flex-container'>
+                                                    <p className="reply-comment-stats">{this.getTimeFromNow(reply.posted)}</p>
+                                                    <div className="reply-comment-stats">
                                                         {
                                                             // show number of likes if there are any likes
                                                             reply.likes > 0 ? 
@@ -236,8 +224,8 @@ class PostHorizontal extends React.Component{
                                             {
                                                 // show likes button
                                                 reply.liked ? 
-                                                    <img src={red_heart_icon} height='10px' width='10px' style={heartStyles}/> :
-                                                    <img src={heart_icon} height='10px' width='10px'style={heartStyles}
+                                                    <img className="heart" src={red_heart_icon} height='10px' width='10px' /> :
+                                                    <img className="heart" src={heart_icon} height='10px' width='10px'
                                                         id={reply.id} onClick={() => this.onReplyLikeClick(comment.id, reply.id)}/>
                                             }
                                         </div>
@@ -250,34 +238,34 @@ class PostHorizontal extends React.Component{
         ) : null;
 
         return(
-            <div className='post-container' style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                <div className='post-content' style={{display:'flex', height:'100vh', width:'85vw', borderStyle:'solid'}}>
-                    <div className='post' style={{flex:'0 0 70%', backgroundColor:'black', position:'relative'}}>
-                        <img src={os_banner} alt='open source' style={{position:'absolute', width:'100%', top:'15%'}}></img>
+            <div className='post-container horiz-flex-container'>
+                <div className='post-content horiz-flex-container'>
+                    <div className='post'>
+                        <img className="post-img" src={os_banner} alt='open source' />
                     </div>
-                    <div className='comments' style={{flex: 1}}>
-                        <div className='post-title' style={{display:'flex'}}>
+                    <div className='comments horiz-flex-fill'>
+                        <div className='post-title horiz-flex-container'>
                             <img src={person_icon} height='40px' width='40px' style={{flex:'0 0 5%'}}/>
-                            <p style={{flex:'1'}}>os_ucsd</p>
+                            <p className="horiz-flex-fill">os_ucsd</p>
                         </div>
                         <hr />
-                        <div className='comments-section' style={{height:'75%', overflow:'auto'}}>
-                            <div className='comments-list' style={{fontSize:'12px'}}>
-                                <div className='post-descr' style={{display:'flex'}}>
+                        <div className='comments-section'>
+                            <div className='comments-list'>
+                                <div className='post-descr horiz-flex-container'>
                                     <img src={person_icon} height='40px' width='40px' style={{flex:'0 10%'}}/>
-                                    <div className='poster-content' style={{flex:'1'}}>
-                                        <p style={{fontWeight:'bold', flex:'0 20%'}}>os-ucsd</p>
-                                        <p style={{flex:'1'}}>First Open Source @ UCSD GBM is today!</p>
+                                    <div className='poster-content horiz-flex-fill'>
+                                        <p className='username'>os-ucsd</p>
+                                        <p className="horiz-flex-fill">First Open Source @ UCSD GBM is today!</p>
                                     </div>
                                 </div>
                                 {recentComments}
                             </div>
                         </div>
                         <hr />
-                        <form onSubmit={this.onAddComment} style={{display:'flex'}}>
-                            <input id='comment' type='text' value={this.state.comment} onChange={this.onChange} 
-                                style={{flex:'0 90%', height:'50px', borderStyle:'none'}}/>
-                            <input type='submit' value='Post' style={buttonStyle}/>
+                        <form className="horiz-flex-container"onSubmit={this.onAddComment}>
+                            <input className="comment-input" id='comment' type='text' value={this.state.comment} 
+                                onChange={this.onChange}/> 
+                            <input className="button" type='submit' value='Post'/>
                         </form>
                     </div>
                 </div>
