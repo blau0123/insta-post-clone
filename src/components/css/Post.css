@@ -13,16 +13,20 @@
     margin-left: 20px;
 }
 
+.post-descr{
+    flex: 1;
+    margin-left: 0;
+}
+
 .post-container{
     display: flex;
     justify-content: center;
     align-items:center;
 }
 
-.post-content{
-    width: 50vw;
+.content-post{
     border-style: solid;
-    margin: 20px;
+    margin: 30px;
 }
 
 .horiz-flex-container{
@@ -42,11 +46,18 @@
     flex:0 90%;
     height: 50px;
     border-style: none;
+
 }
 
 .username{
     flex: 0 10%;
     font-weight: bold;
+}
+
+.post-username{
+    flex: 0 10%;
+    font-weight: bold;
+    margin-left: 20px;
 }
 
 .recent-comment{

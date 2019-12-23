@@ -6,7 +6,7 @@ import red_heart_icon from '../red-heart.png';
 import {connect} from 'react-redux';
 import {addComment, getAllComments, replyToComment, likeComment, likeReply} from '../redux/actions/commentActions';
 
-import './PostHorizontal.css';
+import './css/PostHorizontal.css';
 
 class PostHorizontal extends React.Component{
     constructor(){
@@ -45,7 +45,7 @@ class PostHorizontal extends React.Component{
     onAddComment(evt){
         evt.preventDefault();
 
-        if (this.state.comment.trim() == ''){
+        if (this.state.comment.trim() === ''){
             return;
         }
 
@@ -85,7 +85,7 @@ class PostHorizontal extends React.Component{
         }
 
         // only allow reply if the comment is not empty
-        if (this.state.comment.trim() != ''){
+        if (this.state.comment.trim() !== ''){
             this.props.replyToComment(newReply, commentId);
         }
 
@@ -139,7 +139,6 @@ class PostHorizontal extends React.Component{
 
     render(){
         const {commentsList} = this.props.comments;
-        console.log(commentsList);
         //localStorage.clear();
         // get sorted comments list based on posted date
         const sortedComments = commentsList ? this.getSortedCommentsList(commentsList) : commentsList;

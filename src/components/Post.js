@@ -4,7 +4,7 @@ import person_icon from '../person-icon.png';
 import {connect} from 'react-redux';
 import {addComment, getAllComments} from '../redux/actions/commentActions';
 import {Link} from 'react-router-dom';
-import './Post.css';
+import './css/Post.css';
 
 class Post extends React.Component{
     constructor(){
@@ -52,14 +52,13 @@ class Post extends React.Component{
 
     render(){
         const {commentsList} = this.props.comments;
-
+        //localStorage.clear();
         // get sorted comments list based on posted date
-        const sortedComments = this.getSortedCommentsList(commentsList);
-        console.log(sortedComments);
+        const sortedComments = commentsList ? this.getSortedCommentsList(commentsList) : null;
 
         // creating component of recent comments to only show 2 most recent
-        const recentComments = commentsList ? commentsList.slice(0, 2).map(comment => 
-            <div className='comment horiz-flex-container'>
+        const recentComments = sortedComments ? sortedComments.slice(0, 2).map(comment => 
+            <div key={comment.id} className='comment horiz-flex-container'>
                 <div className='user-comment horiz-flex-container'>
                     <p className="username">username</p>
                     <p className="recent-comment">{comment.content}</p>
@@ -69,18 +68,25 @@ class Post extends React.Component{
 
         return(
             <div className='post-container'>
-                <div className='post-content'>
+                <div className='content-post'>
                     <div className='poster-user horiz-flex-container'>
-                        <img src={person_icon} height='40px' width='40px' style={{flex:'0 0 1%'}}/>
+                        <img src={person_icon} alt="user" height='40px' width='40px' style={{flex:'0 0 1%'}}/>
                         <p className="horiz-flex-fill">os_ucsd</p>
                     </div>
                     <img src={os_banner} alt='open source' style={{width:'50vw'}}></img>
-                    <p className='descr'>First Open Source @ UCSD GBM is today!</p>
+                    <div className="horiz-flex-container">
+                        <p className="post-username">os-ucsd</p>
+                        <p className='descr post-descr'>First Open Source @ UCSD GBM is today!</p>
+                    </div>
                     <div className='comments-section descr'>
-                        <Link to='/allcomments'>View all {commentsList.length} comments</Link>
-                        <ul className='recent-comments-list'>
+                        {
+                            commentsList ?
+                                <Link to='/allcomments'>View all {commentsList.length} comments</Link> :
+                                null
+                        }
+                        <div className='recent-comments-list'>
                             {recentComments}
-                        </ul>
+                        </div>
                     </div>
                     <hr />
                     <form className="submit-comment" onSubmit={this.onAddComment}>
@@ -89,7 +95,7 @@ class Post extends React.Component{
                     </form>
                 </div>
             </div>
-        )
+        );
     }
 }
 
